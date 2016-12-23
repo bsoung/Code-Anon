@@ -1,7 +1,13 @@
 defmodule Discuss.TopicController do
-	use Discuss.Web, :controller
+	use Discuss.Web, :controller # imports ecto module, repo is in Ecto module
 
 	alias Discuss.Topic
+
+	# this plug will execute before any handler in this file
+	plug Discuss.Plugs.RequireAuth when action in [:new, :create, :edit, :update, :delete]
+
+	# function plug, used in a singular function
+	plug :check_topic_owner when action in [:update, :edit, :delete]
 
 	def index(conn, _params) do
 		IO.inspect(conn.assigns)
@@ -9,9 +15,12 @@ defmodule Discuss.TopicController do
 		render conn, "index.html", topics: topics
 	end
 
+	def show(conn, %{"id" => topic_id}) do
+		topic = Repo.get!(Topic, topic_id)
+		render conn, "show.html", topic: topic
+	end
+
 	def new(conn, _params) do
-		# struct = %Topic{}
-		# params = %{}
 		changeset = Topic.changeset(%Topic{}, %{})
 
 		render conn, "new.html", changeset: changeset
@@ -19,7 +28,12 @@ defmodule Discuss.TopicController do
 
 	def create(conn, %{"topic" => topic}) do
 		# %{"topic" = topic} = params
+		# conn.assigns[:users] is the current user
 		changeset = Topic.changeset(%Topic{}, topic)
+
+		changeset = conn.assigns.user # take the current user and pipe it thru as a struct
+			|> build_assoc(:topics) # look at the eg "has_many" relationship with whatever is set
+			|> Topic.changeset(topic)
 
 		case Repo.insert(changeset) do
 			{:ok, _topic} -> 
@@ -58,6 +72,19 @@ defmodule Discuss.TopicController do
 		conn
 		|> put_flash(:info, "Topic Deleted")
 		|> redirect(to: topic_path(conn, :index))
+	end
+
+	# prevent someone from hotlinking to an authorized page
+	def check_topic_owner(conn, _params) do
+		%{params: %{"id" => topic_id}} = conn # get the topic id
+		if Repo.get(Topic, topic_id).user_id == conn.assigns.user.id do
+			conn
+		else
+			conn
+			|> put_flash(:error, "You cannot edit that")
+			|> redirect(to: topic_path(conn, :index))
+			|> halt() # stop at this plug, don't send it onwards
+		end
 	end
 end
 

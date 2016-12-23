@@ -24,6 +24,7 @@ defmodule Discuss.Router do
     # post "/topics", TopicController, :create
     # get "/topics/:id/edit", TopicController, :edit
     # put "/topics/:id", TopicController, :update
+    # show ... - covered in our resources
     
     resources "/", TopicController # phoenix automatically synthesizes all these restful routes for us as long as we are following restful naming
   end
