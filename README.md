@@ -1,6 +1,6 @@
 # Coders Anonymous (A work in progress)
 
-## An anonymous space for coders to converse, collaborate, and receive help. An exploration into a new lanuage and framework. Utilizes Elixir and Phoenix to power the backend. Frontend is a mix of Phoenix and HTML/CSS.
+### An anonymous space for coders to converse, collaborate, and receive help. An exploration into a new lanuage and framework. Utilizes Elixir and Phoenix to power the backend. Frontend is a mix of Phoenix and HTML/CSS.
 
 ## Tech stack
 
