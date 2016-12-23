@@ -10,3 +10,12 @@
 	position: relative;
 	margin-bottom: 25px;
 }
+
+.comment-title {
+	margin-top: 10px;
+	font-size: 20px;
+}
+
+.temp-img {
+	margin-top: 30px;
+}

@@ -1,4 +1,26 @@
-# Discuss
+# Coders Anonymous (A work in progress)
+
+## An anonymous space for coders to converse, collaborate, and receive help. An exploration into a new lanuage and framework. Utilizes Elixir and Phoenix to power the backend. Frontend is a mix of Phoenix and HTML/CSS.
+
+## Tech stack
+
+	* Phoenix Framework
+	* Ueberauth / Ueberauth Github
+	* Postgresql
+	* Ecto
+
+## API
+	
+	* GET "/" Returns a list of topics titles
+	* GET "/topics/new" Returns a new topic title
+	* GET "/topics/:id/edit" Returns an edited version of the topic title
+	* POST "/topics" Creates a new topic title
+	* PUT "/topics/:id" Creates an updated version of the topic title
+	* DELETE "/topics/:id/delete" Deletes a topic based on its id in the database
+	* SHOW {IN PROGRESS}
+
+
+# Phoenix Setup
 
 To start your Phoenix app:
 

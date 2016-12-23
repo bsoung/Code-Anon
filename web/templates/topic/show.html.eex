@@ -1,1 +1,7 @@
-<%= @topic.title %>
+<div class="comment-title">
+	<%= @topic.title %>
+</div>
+
+<div class="temp-img">
+	<img src="https://cdn.meme.am/instances/500x/67479527.jpg" />
+</div>
